@@ -173,6 +173,7 @@ def Adminlogin():
                     vegitablequantity[item]=int(q.get())
                 Lb.insert(item,"id:  "+str(vegitableid[item])+"      name:  "+vegitablelist[item]+"      Available:  "+str(vegitablequantity[item])+"kg")
             Lb.delete(ANCHOR)
+            insert.destroy()
                 
         insert=Tk()
         insert.title("ADD VEGETABLE")
