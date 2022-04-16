@@ -6,10 +6,12 @@ username=[]
 userpassword=[]
 adminname=[]
 adminpassword=[]
+cart=[]
 end=-1
 adminend=-1
 userend=-1
 temp=1
+cartend=-1
 def login():
     def choice(value):
         global temp
@@ -31,7 +33,8 @@ def login():
         if(temp==1):
             for i in range (userend+1):
                 if(username[i]==n.get() and userpassword[i]==p.get()):
-                    print("login successful")
+                    insert.destroy()
+                    Userlogin()
                 else:
                     Label(insert,text="Either password or login is wrong").pack()
         else:
@@ -116,7 +119,15 @@ def signup():
     Button(insert,text="go to login page",command=loginnn).pack()
     insert.mainloop()
 def Adminlogin():
+    global end
+    global vegitablelist
+    global vegitablequantity
+    global vegitableid
     def insertelement():
+        global end
+        global vegitablelist
+        global vegitablequantity
+        global vegitableid
         def insertt():
             global end
             global vegitablelist
@@ -202,4 +213,101 @@ def Adminlogin():
     Button(alogin,text="REMOVE VEGETABLES",command=delete).pack()
     Button(alogin,text="UPDATE VEGETABLES",command=update).pack()
     alogin.mainloop()
+def Userlogin():
+    global end
+    global vegitablelist
+    global vegitablequantity
+    global vegitableid
+    def shoppingcartt():
+        ulogin.destroy()
+        shoppingcart()
+    def addtocart():
+        global end
+        global vegitablelist
+        global vegitablequantity
+        global vegitableid
+        def addtocartt():
+            global end
+            global vegitablelist
+            global vegitablequantity
+            global vegitableid
+            global cart
+            global cartend
+            global temp
+            for item in Lb.curselection():
+                temp=item
+                if vegitablequantity[temp]>int(q.get()):
+                    for i in range(cartend+1):
+                        if(cart[i][0]==vegitableid[item]):
+                            Label(aoc,text="this item is already in cart").pack()
+                            return
+                    temp1=[vegitableid[item],vegitablelist[item],int(q.get())]
+                    cart.append(temp1)
+                    cartend=cartend+1
+                    aoc.destroy()
+                else:
+                    Label(aoc,text="your requirement exceeds the maximum quantity").pack()
+        aoc=Tk()
+        aoc.title("add to cart")
+        Label(aoc,text="Enter the quantity you want to buy").pack()
+        q=Entry(aoc)
+        q.pack()
+        Button(aoc,text="Add",command=addtocartt).pack()
+        aoc.mainloop()
+    ulogin=Tk()
+    ulogin.title("USER")
+    ulogin.geometry("600x600")
+    Lb=Listbox(ulogin,width=50,height=20)
+    Lb.pack()
+    for i in range (end+1):
+            Lb.insert(END,"id:  "+str(vegitableid[i])+"      name:  "+vegitablelist[i]+"      Available:  "+str(vegitablequantity[i])+"kg")
+    Button(ulogin,text="ADD TO CART",command=addtocart).pack()
+    Button(ulogin,text="GO TO CART",command=shoppingcartt).pack()
+    ulogin.mainloop()
+def shoppingcart():
+    global end
+    global vegitablelist
+    global vegitablequantity
+    global vegitableid
+    global cart
+    global cartend
+    global temp
+    def continueshopping():
+        scart.destroy()
+        Userlogin()
+    def removecart():
+        global cart
+        global cartend
+        global temp
+        del cart[temp]
+        cartend=cartend-1
+        Lb.delete(ANCHOR)
+    def buyallitems():
+        global end
+        global vegitablelist
+        global vegitablequantity
+        global vegitableid
+        global cart
+        global cartend
+        for i in range(cartend+1):
+            for j in range(end+1):
+                if(cart[i][0]==vegitableid[j]):
+                    if(cart[i][2]<vegitablequantity[j]):
+                        vegitablequantity[j]=vegitablequantity[j]-cart[i][2]
+                        scart.destroy()
+                    else:
+                        Label(scart,text="Some item in your cart exceeds the maximum quantity available")
+    scart=Tk()
+    scart.title("SHOPPING CART")
+    scart.geometry("600x600")
+    Lb=Listbox(scart,width=50,height=20)
+    Lb.pack()
+    for item in Lb.curselection():
+        temp=item
+    for i in range (cartend+1):
+            Lb.insert(END,"id:  "+str(cart[i][0])+"      name:  "+cart[i][1]+"      Available:  "+str(cart[i][2])+"kg")
+    Button(scart,text="REMOVE FROM CART",command=removecart).pack()
+    Button(scart,text="BUY ALL ITEMS",command=buyallitems).pack()
+    Button(scart,text="CONTINUE SHOPPING",command=continueshopping).pack()
+    scart.mainloop()
 login()
