@@ -166,6 +166,9 @@ def Adminlogin():
             del vegitableid[item]
             del vegitablequantity[item]
         Lb.delete(ANCHOR)
+    def logoutt():
+        alogin.destroy()
+        login()
     def update():
         def updatee():
             global vegitablelist
@@ -212,6 +215,7 @@ def Adminlogin():
     Button(alogin,text="ADD VEGETABLES",command=insertelement).pack()
     Button(alogin,text="REMOVE VEGETABLES",command=delete).pack()
     Button(alogin,text="UPDATE VEGETABLES",command=update).pack()
+    Button(alogin,text="LOGOUT",command=logoutt).pack()
     alogin.mainloop()
 def Userlogin():
     global end
@@ -221,6 +225,9 @@ def Userlogin():
     def shoppingcartt():
         ulogin.destroy()
         shoppingcart()
+    def logoutt():
+        ulogin.destroy()
+        login()
     def addtocart():
         global end
         global vegitablelist
@@ -263,6 +270,7 @@ def Userlogin():
             Lb.insert(END,"id:  "+str(vegitableid[i])+"      name:  "+vegitablelist[i]+"      Available:  "+str(vegitablequantity[i])+"kg")
     Button(ulogin,text="ADD TO CART",command=addtocart).pack()
     Button(ulogin,text="GO TO CART",command=shoppingcartt).pack()
+    Button(ulogin,text="LOGOUT",command=logoutt).pack()
     ulogin.mainloop()
 def shoppingcart():
     global end
@@ -294,7 +302,9 @@ def shoppingcart():
                 if(cart[i][0]==vegitableid[j]):
                     if(cart[i][2]<vegitablequantity[j]):
                         vegitablequantity[j]=vegitablequantity[j]-cart[i][2]
-                        scart.destroy()
+                        Lb.delete(0,END)
+                        cart.clear()
+                        cartend=-1
                     else:
                         Label(scart,text="Some item in your cart exceeds the maximum quantity available")
     scart=Tk()
