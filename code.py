@@ -47,8 +47,11 @@ def login():
                 
     insert=Tk()
     insert.title("LOGIN")
-    insert.geometry("300x200")
-    Label(insert, text="Enter the following details").pack()
+    insert.geometry("900x1080")
+    bg = PhotoImage(file="vegetabless.png" )
+    bg_image = Label(insert,image=bg)
+    bg_image.place(x=0,y=0,relwidth=1,relheight=1)
+    Label(insert, text="Enter the following details").pack(pady=(200,0))
     Label(insert ,text="Username:").pack()
     n=Entry(insert ,width="40")
     n.pack()
@@ -102,9 +105,14 @@ def signup():
             adminend=adminend+1
                 
     insert=Tk()
+    bg = PhotoImage(file="vegetabless.png" )
+    bg_image = Label(insert,image=bg)
+    bg_image.place(x=0,y=0,relwidth=1,relheight=1)
+    
+    
     insert.title("SIGN UP")
-    insert.geometry("300x200")
-    Label(insert, text="Enter the following details").pack()
+    insert.geometry("900x1080")
+    Label(insert, text="Enter the following details").pack(pady=(200,0))
     Label(insert ,text="Username:").pack()
     n=Entry(insert ,width="40")
     n.pack()
